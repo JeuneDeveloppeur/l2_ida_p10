@@ -23,8 +23,10 @@
 
                 //$url = "telecharger.php?fichier=" . urlencode($fichier);
                 //echo "<li>Télécharger le fichhier : <a href=\"$url\">$fichier</a></li>";
+                
             }
             echo "</ul>";
+            echo "<a href='upload_form.php'>Aller vers la page de televersement</a>";
         }
     } else {
         echo "<p>Dossier inexistant !</p>";

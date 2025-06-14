@@ -13,7 +13,9 @@ if (isset($_FILES['mon_fichier'])) {
     $chemin_destination = $fichiers_uploads . $nom_fichier; // "Dossier/sous-dossier/nom_du_fichier.extension"
 
     if (file_exists($chemin_destination)) {
-        echo "Ce fichier existe déjà !";
+        echo "Ce fichier existe déjà ! <br/>";
+        echo "<a href='liste_fichiers.php'>Téléchargement</a>";
+        exit();
     }
 
     $type = mime_content_type($tmp_name);
@@ -28,7 +30,8 @@ if (isset($_FILES['mon_fichier'])) {
     }
 
     if (move_uploaded_file($tmp_name, $chemin_destination)) {
-        echo "Fichier uploadé !!!";
+        echo "Fichier uploadé !!! <br/>";
+        echo "<a href='liste_fichiers.php'>Téléchargement</a>";
     } else {
         echo "Erreur de chargement !";
     }
