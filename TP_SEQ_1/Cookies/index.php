@@ -1,15 +1,22 @@
 <?php
 include 'conn.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = $_POST['login'];
-    $password = $_POST['password'];
+    $login = filter_var($_POST['login'], FILTER_SANITIZE_EMAIL);
+    $password = filter_var($_POST['password'], FILTER_SANITIZE_STRING);
 
-    if ($login === $userLogin && $password === $userMdp) {
+    if ((!filter_var($login, FILTER_VALIDATE_EMAIL) === false)) {
+        if ($login === $userLogin && $password === $userMdp) {
         setcookie("utilisateur", $userLogin, time() + (86400 * 30), "/");
         header("Location: admin.php?msg=" . urlencode("Connexion réussie !"));
+        exit();
     } else {
         header("Location: index.php?msg=" . urlencode("Nom d'utilisateur et/ou mot de passe incorrect !"));
+        exit();
     }
+    } else {
+        echo("Adresse invalide");
+    }
+    
 }
 ?>
 <!DOCTYPE html>
@@ -38,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <!-- FIN EXEMPLE-->
     <form action="" method="post" class="form-control">
         <label for="login" class="form-label"> Nom d'utilisateur </label>
-        <input type="text" name="login" class="form-control" id="login" placeholder="mettre votre nom">
+        <input type="email" name="login" class="form-control" id="login" placeholder="mettre votre nom">
         <br>
         <label for="password" class="form-label"> Mot de passe </label>
         <input type="password" name="password" class="form-control" id="password" placeholder="renseigner le mot de passe">
