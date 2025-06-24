@@ -2,16 +2,22 @@
 session_start();
 include 'conn.php';
 
-if (isset($_POST['login']) && isset($_POST['password'])) {
-    if ($_POST['login'] === $userLogin && $_POST['password'] === $userMdp) {
+ if (isset($_POST['login']) && isset($_POST['password'])) {
+    if (@(!filter_var($_POST['login'], FILTER_VALIDATE_EMAIL) === false)) {
+    if ($_POST['login'] === filter_var($userLogin, FILTER_SANITIZE_EMAIL) && $_POST['password'] === filter_var($userMdp, FILTER_SANITIZE_STRING)) {
         $_SESSION['user'] = $userLogin;
         header("Location: admin.php?msg=" . urlencode("Bienvenue à la page d’administration du site"));
         exit();
     } else {
         header("Location: index.php?msg=" . urlencode("Login ou mot de passe incorrect !"));
         exit();
+        
     }
+    } else {
+  echo("Adresse invalide !");
 }
+}
+
 
 if (isset($_SESSION['user'])) {
     echo '<a href="admin.php">Aller à l’administration</a> | <a href="deconnexion.php">Se déconnecter</a>';
@@ -35,7 +41,7 @@ if (isset($_SESSION['user'])) {
             <div class="form-control">
                 <div class="mb-2">
                     <label>Login :</label>
-                    <input type="text" name="login" required><br>
+                    <input type="email" name="login" required><br>
                 </div>
                 <div class="mb-2">
                     <label>Mot de passe :</label>

@@ -1,6 +1,6 @@
 <?php
 
-$userLogin = "Fallou Ndiaye";
+$userLogin = "Falloundiaye@gmail.com";
 $userMdp = "mot2passe";
 
 ?>
